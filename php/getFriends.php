@@ -7,7 +7,7 @@ $myid = $_REQUEST["myid"];
 
 $myid = intval($myid);
 
-$username = ""; // fill this
+$username = ""; // fill this again
 $password = "";// fill this
 $database = "";// fill this
 
