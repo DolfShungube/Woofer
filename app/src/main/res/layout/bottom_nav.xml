@@ -14,7 +14,8 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="centerInside"
-        android:src="@drawable/home" />
+        android:src="@drawable/baseline_home_24"
+        android:contentDescription="Home" />
 
     <ImageView
         android:id="@+id/search"
@@ -22,21 +23,23 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:padding="8dp"
-        android:scaleType="centerInside"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/search" />
+        android:scaleType="centerInside"
+        android:src="@drawable/search_24"
+        android:contentDescription="Search" />
 
     <ImageView
-        android:id="@+id/add"
+        android:id="@+id/notifications"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:padding="8dp"
-        android:scaleType="centerInside"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/add_status" />
+        android:scaleType="centerInside"
+        android:src="@drawable/baseline_notifications_24"
+        android:contentDescription="Notifications" />
 
     <ImageView
         android:id="@+id/profile"
@@ -44,8 +47,11 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:padding="8dp"
-        android:scaleType="centerInside"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/profile_toggle" />
+        android:scaleType="centerInside"
+        android:src="@drawable/person_24"
+        android:contentDescription="Profile" />
 </LinearLayout>
+
+

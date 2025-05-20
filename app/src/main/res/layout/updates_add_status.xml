@@ -33,13 +33,14 @@
             android:layout_height="wrap_content"
             android:paddingLeft="40dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/add_stprofile"/>
+                android:src="@drawable/add_stprofile"
+                app:shapeAppearanceOverlay="@style/CircleImageView"/>
 
             <TextView
                 android:id="@+id/mystatusText"
@@ -127,13 +128,14 @@
                 android:paddingBottom="16dp">
 
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/image2"
                     android:layout_width="95dp"
                     android:layout_height="95dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/friend_stprofile"/>
+                    android:src="@drawable/friend_stprofile"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"/>
 
                 <TextView
                     android:id="@+id/text2"
@@ -155,14 +157,14 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp">
 
-
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/image3"
                     android:layout_width="95dp"
                     android:layout_height="95dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/friend_stprofile"/>
+                    android:src="@drawable/friend_stprofile"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"/>
 
                 <TextView
                     android:id="@+id/text3"
@@ -185,13 +187,14 @@
                 android:paddingBottom="16dp">
 
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/image4"
                     android:layout_width="95dp"
                     android:layout_height="95dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/friend_stprofile"/>
+                    android:src="@drawable/friend_stprofile"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"/>
 
                 <TextView
                     android:id="@+id/text4"
