@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -10,30 +10,33 @@
 
     <EditText
         android:id="@+id/EditText"
-        android:layout_width="405dp"
+        android:layout_width="match_parent"
         android:layout_height="59dp"
-
+        android:layout_margin="16dp"
         android:background="@drawable/custom_edit"
-        android:drawableStart="@drawable/search_icon"
-        android:ems="10"
-        android:hint="  Search username"
+        android:hint="Search username"
         android:inputType="text"
-        android:padding="@dimen/cardview_default_radius"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="5dp" />
+        android:padding="12dp" />
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="35dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@id/EditText"
+        android:layout_alignEnd="@id/EditText"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/rounded"
+        android:backgroundTint="#e293c4"
+        android:src="@drawable/search_icon"
+        android:scaleType="centerInside"
+        android:contentDescription="Search" />
 
-        app:layout_constraintBottom_toBottomOf="@id/EditText"
-        app:layout_constraintEnd_toEndOf="@+id/EditText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/search_icon" />
+    <include
+        android:id="@+id/bottom_nav"
+        layout="@layout/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
