@@ -2,21 +2,51 @@ package com.example.woofer;
 
 import android.net.Uri;
 
-public class Friend {
-    private String username;
-    private Uri imageUri;
+import java.io.Serializable;
 
-    public Friend(String username, Uri imageUri){
-        this.username = username;
-        this.imageUri = imageUri;
+public class Friend implements Serializable {
+    private int id;
+    private String friendUsername;
+    private int ImageResId;
+
+    private boolean isFollowing;
+
+    public Friend(int id, String friendUsername, int ImageResId, boolean isFollowing){
+        this.id = id;
+        this.friendUsername = friendUsername;
+        this.ImageResId = ImageResId;
+        this.isFollowing = isFollowing;
     }
 
-    public String getUsername(){
-        return username;
+    public int getId(){
+        return id;
     }
 
-    public Uri getImageUri(){
-        return imageUri;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFriendUsername(){
+        return friendUsername;
+    }
+
+    public void setUsername(String friendUsername) {
+        this.friendUsername = friendUsername;
+    }
+
+    public int getImageResId(){
+        return ImageResId;
+    }
+    public void setImageResId(int ImageResId){
+        this.ImageResId= ImageResId;
+    }
+
+    public boolean isFollowing() {
+        return isFollowing;
+    }
+
+    public void setFollowing(boolean following) {
+        isFollowing = following;
     }
 }
 

@@ -52,10 +52,13 @@ public class UpdatesFragment extends Fragment {
         fetchStatuses();
         return view;
     }
-
+    public void onResume() {
+        super.onResume();
+        fetchStatuses();
+    }
     private void fetchStatuses() {
         Request request = new Request.Builder()
-                .url("https://lamp.ms.wits.ac.za/home/s2744607/ ")
+                .url("https://lamp.ms.wits.ac.za/home/s2744607/getstatus.php")
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -65,9 +68,8 @@ public class UpdatesFragment extends Fragment {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-
+                String responseBody = response.body().string();
                 requireActivity().runOnUiThread(new Runnable() {
-                    String responseBody = response.body().string();
                     @Override
                     public void run() {
                         processJSON(responseBody);
@@ -84,16 +86,17 @@ public class UpdatesFragment extends Fragment {
             statusList.clear();
             for (int i = 0; i < all.length(); i++) {
                 JSONObject status = all.getJSONObject(i);
+                int statusId = status.getInt("status_id");
                 String username = status.getString("username");
                 String text = status.getString("content");
                 String timestamp = status.getString("timestamp");
                 int upvotes = status.getInt("likes");
 
-                statusList.add(new Status(username,text,timestamp,upvotes));
+                statusList.add(new Status(statusId,username,text,timestamp,R.drawable.default_profile,upvotes));
             }
             statusAdapter.notifyDataSetChanged();
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }

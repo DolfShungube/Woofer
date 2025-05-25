@@ -1,22 +1,28 @@
 package com.example.woofer;
 
 public class Status {
-    private static String username;
-    private static String text;
-    private static String timestamp;
+    private int statusId;
+    private String username;
+    private String text;
+    private String timestamp;
+    private int profileImageResId;
+    private int upvotes;
 
-    private static int upvotes;
-
-    public Status(String username, String text, String timestamp, int upvotes) {
+    public Status(int statusId, String username, String text, String timestamp, int profileImageResId, int upvotes) {
+        this.statusId = statusId;
         this.username = username;
         this.text = text;
         this.timestamp = timestamp;
+        this.profileImageResId = profileImageResId;
         this.upvotes = upvotes;
     }
-
-    public Status() {
+    public int getStatusId(){
+        return statusId;
     }
 
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
 
     public String getUsername() {
         return username;
@@ -49,5 +55,13 @@ public class Status {
 
     public void setUpvotes(int upvotes) {
         this.upvotes = upvotes;
+    }
+
+    public int getProfileImageResId() {
+        return profileImageResId;
+    }
+
+    public void setProfileImageResId(int profileImageResId) {
+        this.profileImageResId = profileImageResId;
     }
 }

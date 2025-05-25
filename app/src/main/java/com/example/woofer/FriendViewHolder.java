@@ -8,15 +8,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
+import android.widget.Button;
+
 
 public class FriendViewHolder extends RecyclerView.ViewHolder {
-    TextView username;
-    Uri imageUri;
+    TextView friendUsername;
     ShapeableImageView profileImage;
+
+    Button followBtn;
     public FriendViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        username = itemView.findViewById(R.id.friendUsername);
-        profileImage = itemView.findViewById(R.id.friend);
+        friendUsername = itemView.findViewById(R.id.friendUsername);
+        profileImage = itemView.findViewById(R.id.friendProfileImage);
+        followBtn = itemView.findViewById(R.id.followBtn);
     }
 }

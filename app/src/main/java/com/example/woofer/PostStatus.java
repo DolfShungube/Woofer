@@ -54,13 +54,14 @@ public class PostStatus extends AppCompatActivity {
     }
 
     private void postStatus(String statusTxt) {
+        String userId = "1";
         RequestBody requestBody = new FormBody.Builder()
-                .add("user_id", "userId")
-                .add("content", "statusId")
+                .add("user_id", userId)
+                .add("content", statusTxt)
                 .build();
 
         Request request = new Request.Builder()
-                .url("https://lamp.ms.wits.ac.za/home/s2744607/ ")
+                .url("https://lamp.ms.wits.ac.za/home/s2744607/poststatus.php")
                 .post(requestBody)
                 .header("User-Agent", "Woofer")
                 .build();
