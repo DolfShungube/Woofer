@@ -52,7 +52,7 @@
                 android:textColor="#888888"
                 android:layout_marginTop="4dp" />
 
-            <!-- Status text -->
+
             <TextView
                 android:id="@+id/statusText"
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:layout_marginTop="8dp"
                 android:lineSpacingExtra="2dp" />
 
-            <!-- Upvotes row -->
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
