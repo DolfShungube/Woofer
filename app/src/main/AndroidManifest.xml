@@ -16,6 +16,12 @@
         android:theme="@style/Base.Theme.Woofer"
         tools:targetApi="31">
         <activity
+            android:name=".ChangeUsernameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FriendProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".StatusDetailActivity"
             android:exported="false" />
         <activity

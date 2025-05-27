@@ -15,8 +15,6 @@
             android:id="@+id/friendProfileImage"
             android:layout_width="95dp"
             android:layout_height="95dp"
-            android:clickable="true"
-            android:focusable="true"
             android:src="@drawable/friend_stprofile" />
 
         <TextView
@@ -27,6 +25,8 @@
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/friendProfileImage"
             android:text="username1"
+            android:clickable="true"
+            android:focusable="true"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />

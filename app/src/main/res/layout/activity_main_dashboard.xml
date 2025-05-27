@@ -32,7 +32,7 @@
                 android:id="@+id/profileImage"
                 android:layout_width="258dp"
                 android:layout_height="254dp"
-                android:src="@drawable/status_profile"
+                android:src="@drawable/default_profile"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"

@@ -1,7 +1,10 @@
 package com.example.woofer;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +60,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
             notifyItemChanged(position);
         });
         holder.itemView.setOnClickListener(v -> {
-            // Intent to go to FriendProfileActivity
+            Intent intent = new Intent(context, FriendProfileActivity.class);
+            intent.putExtra("friend", friend);
+            context.startActivity(intent);
+
         });
 
     }

@@ -31,7 +31,9 @@
             android:textStyle="bold"
             android:layout_toRightOf="@id/friendImageProfile"
             android:layout_marginLeft="16dp"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:focusable="true"/>
 
         <Button
             android:id="@+id/followBtn"
