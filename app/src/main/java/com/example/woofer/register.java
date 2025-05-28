@@ -1,4 +1,4 @@
-package com.example.woofer;
+package com.example.wooferlogin2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -94,7 +94,7 @@ public class register extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            if (result.equalsIgnoreCase("success")) {
+                            if (result.equalsIgnoreCase("Success")) {
                                 Toast.makeText(register.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(register.this, login.class);
                                 startActivity(i);
