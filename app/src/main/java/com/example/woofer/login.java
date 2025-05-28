@@ -1,14 +1,19 @@
-package com.example.wooferlogin2;
+package com.example.woofer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -27,6 +32,7 @@ public class login extends AppCompatActivity {
     EditText username,password;
     OkHttpClient client = new OkHttpClient();
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +99,27 @@ public class login extends AppCompatActivity {
                 runOnUiThread(() -> {
                     if(result.toLowerCase().contains("login successful")) {
                         Toast.makeText(login.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(login.this, register.class); //
+                        try {
+                            JSONObject responseString = new JSONObject(result);
+
+                            if (responseString.getBoolean("login successful")) {
+                                int userId = responseString.getInt("user_id");
+                                String username = responseString.getString("username");
+
+                                SharedPreferences prefs = getSharedPreferences("WooferPrefs", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putBoolean("is_logged_in", true);
+                                editor.putInt("user_id", userId);
+                                editor.putString("username", username);
+                                editor.apply();
+
+                                startActivity(new Intent(login.this, MainActivity.class));
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Intent i = new Intent(login.this, register.class);
                         startActivity(i);
                         finish();
                     } else {

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="#f0f0f0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/EditText"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/custom_edit"
+        android:hint="Search username"
+        android:inputType="text"
+        android:padding="12dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@id/EditText"
+        android:layout_alignEnd="@id/EditText"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/rounded"
+        android:backgroundTint="#e293c4"
+        android:contentDescription="Search"
+        android:scaleType="centerInside"
+        android:src="@drawable/search_icon"
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+</RelativeLayout>

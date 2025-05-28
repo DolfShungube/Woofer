@@ -1,5 +1,7 @@
 package com.example.woofer;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -52,7 +54,8 @@ public class NotificationsFragment extends Fragment {
         fetchNotifications();
     }
     private void fetchNotifications() {
-        String userId = "1";
+        SharedPreferences prefs = getActivity().getSharedPreferences("WooferPrefs", Context.MODE_PRIVATE);
+        int userId = prefs.getInt("user_id", -1);
         String url = "https://lamp.ms.wits.ac.za/home/s2744607/get_notifications.php/user_id=" + userId;
         Request request = new Request.Builder()
                 .url(url)

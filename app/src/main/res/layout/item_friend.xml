@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -15,6 +16,7 @@
             android:id="@+id/friendProfileImage"
             android:layout_width="95dp"
             android:layout_height="95dp"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
             android:src="@drawable/friend_stprofile" />
 
         <TextView

@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchUsersFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
     private EditText searchInput;
     private ListView listView;
@@ -38,7 +38,7 @@ public class SearchUsersFragment extends Fragment {
         listView = view.findViewById(R.id.list_friends);
 
         List<SearchUser> friends = dummyFriends(); // Replace with real data/API call
-        adapter = new SearchUserListAdapter(getContext(), R.layout.layout_friend_list_item, friends);
+        adapter = new SearchUserListAdapter(getContext(), R.layout.item_friend, friends);
         listView.setAdapter(adapter);
 
         searchInput.addTextChangedListener(new TextWatcher() {

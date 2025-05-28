@@ -1,4 +1,4 @@
-package com.example.wooferlogin2;
+package com.example.woofer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
