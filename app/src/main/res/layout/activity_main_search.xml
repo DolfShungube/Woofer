@@ -33,11 +33,5 @@
         android:src="@drawable/search_icon"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <include
-        android:id="@+id/bottom_nav"
-        layout="@layout/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
