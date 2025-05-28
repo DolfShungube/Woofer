@@ -16,11 +16,18 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         int delayMillis = 3000;
 
+        boolean isLoggedIn = false;
+
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
-                finish();
+                if(isLoggedIn){
+                    startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
+                    finish();
+                }else {
+                    startActivity(new Intent(SplashScreenActivity.this, login.class));
+                    finish();
+                }
             }
         }, delayMillis);
     }

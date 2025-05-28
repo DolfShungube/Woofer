@@ -16,6 +16,9 @@
         android:theme="@style/Base.Theme.Woofer"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangeUsernameActivity"
             android:exported="false" />
         <activity
@@ -25,10 +28,19 @@
             android:name=".StatusDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".PostStatusActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FriendsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login"
+            android:exported="false" />
+        <activity
             android:name=".register"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
