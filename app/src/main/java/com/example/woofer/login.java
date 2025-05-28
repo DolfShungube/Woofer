@@ -1,4 +1,4 @@
-package com.example.woofer;
+package com.example.wooferlogin2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +22,7 @@ import okhttp3.Response;
 
 public class login extends AppCompatActivity {
     Button login, signUp;
+    TextView forgotten;
     TextView userText, passwordText;
     EditText username,password;
     OkHttpClient client = new OkHttpClient();
@@ -31,11 +32,21 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         login = findViewById(R.id.login_btn);
+        forgotten = findViewById(R.id.forgotPassword);
         username= findViewById(R.id.editUsername);
         password = findViewById(R.id.editPassword);
         signUp = findViewById(R.id.btnSignup);
         userText = (TextView)findViewById(R.id.editUsername);
         passwordText = (TextView)findViewById(R.id.editPassword);
+
+        forgotten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(login.this, resetPassword.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
