@@ -11,8 +11,8 @@ public class SearchUserViewHolder {
     ShapeableImageView profileImage;
 
     public SearchUserViewHolder(View view) {
-        username = view.findViewById(R.id.text_username);
-        profileImage = view.findViewById(R.id.image_friend);
+        username = view.findViewById(R.id.friendUsername);
+        profileImage = view.findViewById(R.id.friendProfileImage);
     }
 }
 

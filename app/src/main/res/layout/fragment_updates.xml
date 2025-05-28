@@ -31,14 +31,14 @@
             android:id="@+id/image1"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/status_profile"
+            android:src="@drawable/default_profile"
             app:shapeAppearanceOverlay="@style/CircleImageView"/>
 
         <TextView
             android:id="@+id/mystatusText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="16sp"
             android:text="What's on your mind?"
             android:textSize="16sp"
             android:textColor="#888888"

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         profileBtn = findViewById(R.id.profile);
 
         homeBtn.setOnClickListener(v -> loadFragment(new UpdatesFragment()));
-        search.setOnClickListener(v -> loadFragment(new SearchFragment()));
+        searchBtn.setOnClickListener(v -> loadFragment(new SearchFragment()));
         notificationsBtn.setOnClickListener(v -> loadFragment(new NotificationsFragment()));
         profileBtn.setOnClickListener(v -> loadFragment(new ProfileFragment()));
 

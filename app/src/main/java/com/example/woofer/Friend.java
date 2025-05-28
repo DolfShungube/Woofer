@@ -4,7 +4,7 @@ import android.net.Uri;
 
 import java.io.Serializable;
 
-public class Friend implements Serializable {
+public class Friend implements Serializable{
     private int id;
     private String friendUsername;
     private int ImageResId;

@@ -1,6 +1,11 @@
 package com.example.woofer;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +14,8 @@ import android.widget.EditText;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -56,9 +63,11 @@ public class PostStatusActivity extends AppCompatActivity {
     }
 
     private void postStatus(String statusTxt) {
-        String userId = "1";
+        SharedPreferences prefs = getSharedPreferences("WooferPrefs", Context.MODE_PRIVATE);
+        int userId = prefs.getInt("user_id", -1);
+
         RequestBody requestBody = new FormBody.Builder()
-                .add("user_id", userId)
+                .add("user_id", String.valueOf(userId))
                 .add("content", statusTxt)
                 .build();
 
@@ -67,6 +76,7 @@ public class PostStatusActivity extends AppCompatActivity {
                 .post(requestBody)
                 .header("User-Agent", "Woofer")
                 .build();
+
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -75,25 +85,27 @@ public class PostStatusActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if(response.isSuccessful()) {
-                    runOnUiThread(new Runnable() {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+                    try {
+                        JSONObject json = new JSONObject(responseBody);
+                        int statusId = json.getInt("status_id");
 
-                        @Override
-                        public void run() {
-                           finish();
-                        }
-                    });
-                }
-                else{
-                    runOnUiThread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                           statusText.setError("Failed to post status");
-                        }
-                    });
+                        runOnUiThread(() -> {
+                            Intent intent = new Intent(PostStatusActivity.this, StatusDetailActivity.class);
+                            intent.putExtra("status_id", statusId);
+                            startActivity(intent);
+                            finish();
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        runOnUiThread(() -> statusText.setError("Unexpected server response"));
+                    }
+                } else {
+                    runOnUiThread(() -> statusText.setError("Failed to post status"));
                 }
             }
         });
     }
+
 }

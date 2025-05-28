@@ -55,6 +55,7 @@ public class StatusDetailActivity extends AppCompatActivity {
     }
 
     private void getStatus(int statusId) {
+        statusId = getIntent().getIntExtra("status_id", -1);
         String url = "https://lamp.ms.wits.ac.za/home/s2744607/view_status.php?status_id=" + statusId;
         Request request = new Request.Builder()
                 .url(url)

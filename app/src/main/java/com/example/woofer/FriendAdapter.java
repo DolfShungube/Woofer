@@ -1,10 +1,11 @@
 package com.example.woofer;
 
-import static androidx.core.content.ContextCompat.startActivity;
+import static android.app.PendingIntent.getActivity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
-    private List<Friend> friendList;
+    private final List<Friend> friendList;
     private Context context;
     private int currentUserId;
 
@@ -42,6 +43,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull FriendViewHolder holder, int position) {
         Friend friend = friendList.get(position);
+        int friendId = friend.getId();
+
+        followRequest(currentUserId, friendId, position);
 
         holder.friendUsername.setText(friend.getFriendUsername());
         if(friend.isFollowing()){
@@ -69,6 +73,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
     }
 
     public void unfollowRequest(int userId, int friendId, int position){
+        SharedPreferences prefs = context.getSharedPreferences("WooferPrefs", Context.MODE_PRIVATE);
+        userId = prefs.getInt("user_id", -1);
+
         String url = "https://lamp.ms.wits.ac.za/home/s2744607/remove_friend.php" + "?user_id_1=" + userId + "&user_id_2=" + friendId;
         Request request = new Request.Builder()
                 .url(url)
