@@ -39,12 +39,11 @@ public class register extends AppCompatActivity {
         reg_CfmPassword = findViewById(R.id.Register_ConfirmPasswordUsername);
         reg_btn = findViewById(R.id.Register_signUp_btn);
 
-        reg_reEmail = (TextView)reg_emailAddress;
-        reg_U = (TextView) reg_username;
-        reg_f = (TextView) reg_fullnames;
-        reg_p =(TextView) reg_password;
-        reg_cfmP = (TextView) reg_CfmPassword;
-
+        reg_emailAddress.setText("");
+        reg_username.setText("");
+        reg_fullnames.setText("");
+        reg_password.setText("");
+        reg_CfmPassword.setText("");
 
         reg_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +99,7 @@ public class register extends AppCompatActivity {
                                 startActivity(i);
                                 finish();
                             } else {
-                                Toast.makeText(register.this, "Ensure you entered all the fields", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(register.this, "Registration failed: " + result, Toast.LENGTH_SHORT).show();
                                 reg_reEmail.setText("");
                                 reg_U.setText("");
                                 reg_f.setText("");

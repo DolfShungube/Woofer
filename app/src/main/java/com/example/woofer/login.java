@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,15 +43,16 @@ public class login extends AppCompatActivity {
         username= findViewById(R.id.editUsername);
         password = findViewById(R.id.editPassword);
         signUp = findViewById(R.id.btnSignup);
-        userText = (TextView)findViewById(R.id.editUsername);
-        passwordText = (TextView)findViewById(R.id.editPassword);
+
+        username.setText("");
+        password.setText("");
 
         forgotten.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(login.this, resetPassword.class);
                 startActivity(i);
-                finish();
+
             }
         });
 
@@ -89,22 +91,22 @@ public class login extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                Log.e("WooferDebug", "Login failed: " + e.getMessage());
                 runOnUiThread(() -> Toast.makeText(login.this, "Network error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String result = response.body().string().trim();
-              //  Log.d("LoginResponse", "Server response: '" + result + "'");
+                Log.d("WooferDebug", "Login response: " + result);
                 runOnUiThread(() -> {
                     if(result.toLowerCase().contains("login successful")) {
                         Toast.makeText(login.this, "Login successful", Toast.LENGTH_SHORT).show();
                         try {
-                            JSONObject responseString = new JSONObject(result);
-
-                            if (responseString.getBoolean("login successful")) {
-                                int userId = responseString.getInt("user_id");
-                                String username = responseString.getString("username");
+                            JSONObject json = new JSONObject(result);
+                            if (json.getBoolean("login_successful")) {
+                                int userId = json.getInt("user_id");
+                                String username = json.getString("username");
 
                                 SharedPreferences prefs = getSharedPreferences("WooferPrefs", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = prefs.edit();
@@ -115,13 +117,14 @@ public class login extends AppCompatActivity {
 
                                 startActivity(new Intent(login.this, MainActivity.class));
                                 finish();
+                            } else {
+                                Toast.makeText(login.this, "Login failed", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.e("WooferDebug", "JSON error: " + e.getMessage());
+                            Toast.makeText(login.this, "Invalid server response", Toast.LENGTH_SHORT).show();
                         }
-                        Intent i = new Intent(login.this, register.class);
-                        startActivity(i);
-                        finish();
+
                     } else {
                         Toast.makeText(login.this, "Login failed: " + result, Toast.LENGTH_SHORT).show();
                         userText.setText("");
