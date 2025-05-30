@@ -1,5 +1,6 @@
 package com.example.woofer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,15 +25,21 @@ public class ProfileFragment extends Fragment {
 
         SharedPreferences prefs = getActivity().getSharedPreferences("WooferPrefs", Context.MODE_PRIVATE);
         String savedUsername = prefs.getString("username", "Unknown");
+        String savedFullname = prefs.getString("full_name", "Unknown" );
 
 
         TextView username = view.findViewById(R.id.userName);
+        TextView fullname = view.findViewById(R.id.fullName);
         LinearLayout friendsLayout = view.findViewById(R.id.friendsLayout);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        LinearLayout changeUsername = view.findViewById(R.id.changeUsername);
         Button logout = view.findViewById(R.id.logoutButton);
 
         username.setText(savedUsername);
+        fullname.setText(savedFullname);
 
-        username.setOnClickListener(v -> {
+
+        changeUsername.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ChangeUsernameActivity.class);
             startActivity(intent);
         });

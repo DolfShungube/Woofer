@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,8 +29,6 @@
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/friendProfileImage"
             android:text="username1"
-            android:clickable="true"
-            android:focusable="true"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />

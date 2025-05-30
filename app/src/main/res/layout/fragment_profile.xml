@@ -43,28 +43,36 @@
             android:layout_height="220dp"
             android:layout_gravity="center"
             android:src="@drawable/default_profile" />
+
+        <LinearLayout
+            android:id="@+id/changeUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:hint="UserName"
+                android:gravity="center"
+                android:textColor="#737373"
+                android:textSize="20sp"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp">
             <TextView
-                android:id="@+id/userName"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:text="UserName"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:textColor="#737373"
-                android:textSize="20sp"/>
-            <TextView
                 android:id="@+id/fullName"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:text="FullName"
+                android:hint="FullName"
                 android:gravity="center"
                 android:textSize="20sp"
                 android:textColor="#000000" />
@@ -103,7 +111,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Logout"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textColor="#fff"
             android:backgroundTint="#e293c4"
             android:layout_gravity="center_horizontal"
