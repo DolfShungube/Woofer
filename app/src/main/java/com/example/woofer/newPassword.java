@@ -41,6 +41,12 @@ public class newPassword extends AppCompatActivity {
                 String email = newEmail.getText().toString();
                 String otp = newOTP.getText().toString();
                 String nPassword = newPass.getText().toString();
+
+                if (email.isEmpty() || otp.isEmpty() || nPassword.isEmpty()) {
+                    Toast.makeText(newPassword.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 postData(email, otp ,nPassword);
             }
         });

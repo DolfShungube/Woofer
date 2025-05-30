@@ -1,4 +1,7 @@
 package com.example.woofer;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,26 +11,32 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class SearchFragment extends Fragment {
 
     private EditText searchInput;
     private ListView listView;
     private SearchUserListAdapter adapter;
+    private List<SearchUser> users = new ArrayList<>();
 
-    private List<SearchUser> dummyFriends() {
-        List<SearchUser> list = new ArrayList<>();
-        list.add(new SearchUser("wooferboy", "https://example.com/images/user1.jpg"));
-        list.add(new SearchUser("happyhound", "https://example.com/images/user2.jpg"));
-        list.add(new SearchUser("barkgal", "https://example.com/images/user3.jpg"));
-
-        return list;
-    }
+    private OkHttpClient client = new OkHttpClient();
 
     @Nullable
     @Override
@@ -37,19 +46,57 @@ public class SearchFragment extends Fragment {
         searchInput = view.findViewById(R.id.edit_search_friend);
         listView = view.findViewById(R.id.list_friends);
 
-        List<SearchUser> friends = dummyFriends(); // Replace with real data/API call
-        adapter = new SearchUserListAdapter(getContext(), R.layout.item_friend, friends);
+        adapter = new SearchUserListAdapter(getContext(), R.layout.item_friend, users);
         listView.setAdapter(adapter);
+
 
         searchInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.filter(s.toString());
+                fetchUser(s.toString());
             }
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void afterTextChanged(Editable s) {}
         });
 
         return view;
+    }
+
+    // Updated to accept query
+    private void fetchUser(String query) {
+        String url = "https://lamp.ms.wits.ac.za/home/s2744607/get_user.php?search=" + query;
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String responseBody = response.body().string();
+                requireActivity().runOnUiThread(() -> processJSON(responseBody));
+            }
+        });
+    }
+
+    public void processJSON(String json) {
+        try {
+            JSONArray all = new JSONArray(json);
+            users.clear();
+            for (int i = 0; i < all.length(); i++) {
+                JSONObject user = all.getJSONObject(i);
+                String username = user.getString("username");
+
+                users.add(new SearchUser(username, R.drawable.default_profile));
+            }
+            adapter.notifyDataSetChanged(); // FIXED: use adapter instance
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

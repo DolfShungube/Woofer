@@ -1,6 +1,7 @@
 package com.example.woofer;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,6 +36,8 @@ public class UpdatesFragment extends Fragment {
     private RecyclerView statusRecyclerView;
     private StatusAdapter statusAdapter;
     private List<Status> statusList = new ArrayList<>();
+
+    private
     OkHttpClient client = new OkHttpClient();
 
     @SuppressLint("MissingInflatedId")
@@ -48,6 +52,13 @@ public class UpdatesFragment extends Fragment {
 
         statusAdapter = new StatusAdapter(statusList, getContext());
         statusRecyclerView.setAdapter(statusAdapter);
+
+        ImageView addStatus = view.findViewById(R.id.addText);
+
+        addStatus.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), PostStatusActivity.class);
+            startActivity(intent);
+        });
 
         fetchStatuses();
         return view;

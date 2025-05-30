@@ -1,6 +1,7 @@
 package com.example.woofer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,11 @@ public class SearchUserListAdapter extends ArrayAdapter<SearchUser> {
         SearchUser friend = getItem(position);
         holder.username.setText(friend.getUsername());
 
+        convertView.setOnClickListener(v ->{
+            Intent intent = new Intent(context, FriendProfileActivity.class);
+            intent.putExtra("username", friend.getUsername());
+            context.startActivity(intent);
+        });
 
         return convertView;
     }

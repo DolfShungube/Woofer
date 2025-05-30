@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         notificationsBtn.setOnClickListener(v -> loadFragment(new NotificationsFragment()));
         profileBtn.setOnClickListener(v -> loadFragment(new ProfileFragment()));
 
+        loadFragment(new UpdatesFragment());
+
 
     }
     private void loadFragment(Fragment fragment) {

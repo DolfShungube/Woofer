@@ -3,17 +3,17 @@ package com.example.woofer;
 public class SearchUser{
 
     private String username;
-    private String profileImageUrl;
+    private int ImageResId;
 
-    public SearchUser(String username, String profileImageUrl) {
+    public SearchUser(String username, int ImageResId) {
         this.username = username;
-        this.profileImageUrl = profileImageUrl;
+        this.ImageResId = ImageResId;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getProfileImageUrl() {
-        return profileImageUrl;
+    public int ImageResId() {
+        return  ImageResId;
     }}

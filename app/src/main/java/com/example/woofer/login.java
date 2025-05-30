@@ -29,8 +29,7 @@ import okhttp3.Response;
 public class login extends AppCompatActivity {
     Button login, signUp;
     TextView forgotten;
-    TextView userText, passwordText;
-    EditText username,password;
+    EditText username, password;
     OkHttpClient client = new OkHttpClient();
 
     @SuppressLint("CutPasteId")
@@ -38,48 +37,37 @@ public class login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         login = findViewById(R.id.login_btn);
         forgotten = findViewById(R.id.forgotPassword);
-        username= findViewById(R.id.editUsername);
+        username = findViewById(R.id.editUsername);
         password = findViewById(R.id.editPassword);
         signUp = findViewById(R.id.btnSignup);
 
         username.setText("");
         password.setText("");
 
-        forgotten.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(login.this, resetPassword.class);
-                startActivity(i);
-
-            }
+        forgotten.setOnClickListener(view -> {
+            Intent i = new Intent(login.this, resetPassword.class);
+            startActivity(i);
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String user = username.getText().toString();
-                String passwordUser = password.getText().toString();
-                postData(user, passwordUser);
-            }
+        login.setOnClickListener(view -> {
+            String user = username.getText().toString().trim();
+            String passwordUser = password.getText().toString().trim();
+            postData(user, passwordUser);
         });
 
-
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent i = new Intent(login.this,register.class);
-                startActivity(i);
-            }
+        signUp.setOnClickListener(view -> {
+            Intent i = new Intent(login.this, register.class);
+            startActivity(i);
         });
-
     }
-    public void postData(String username, String password){
-        RequestBody requestBody =  new FormBody.Builder()
+
+    public void postData(String username, String password) {
+        RequestBody requestBody = new FormBody.Builder()
                 .add("username", username)
-                .add("password", password)  // adjust based on PHP server expectation
+                .add("password", password)
                 .build();
 
         Request request = new Request.Builder()
@@ -90,50 +78,50 @@ public class login extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
                 Log.e("WooferDebug", "Login failed: " + e.getMessage());
-                runOnUiThread(() -> Toast.makeText(login.this, "Network error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                runOnUiThread(() ->
+                        Toast.makeText(login.this, "Network error: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                );
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String result = response.body().string().trim();
                 Log.d("WooferDebug", "Login response: " + result);
+
                 runOnUiThread(() -> {
-                    if(result.toLowerCase().contains("login successful")) {
-                        Toast.makeText(login.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        try {
-                            JSONObject json = new JSONObject(result);
-                            if (json.getBoolean("login_successful")) {
-                                int userId = json.getInt("user_id");
-                                String username = json.getString("username");
+                    try {
+                        JSONObject json = new JSONObject(result);
 
-                                SharedPreferences prefs = getSharedPreferences("WooferPrefs", MODE_PRIVATE);
-                                SharedPreferences.Editor editor = prefs.edit();
-                                editor.putBoolean("is_logged_in", true);
-                                editor.putInt("user_id", userId);
-                                editor.putString("username", username);
-                                editor.apply();
+                        boolean success = json.getBoolean("login_successful");
 
-                                startActivity(new Intent(login.this, MainActivity.class));
-                                finish();
-                            } else {
-                                Toast.makeText(login.this, "Login failed", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            Log.e("WooferDebug", "JSON error: " + e.getMessage());
-                            Toast.makeText(login.this, "Invalid server response", Toast.LENGTH_SHORT).show();
+                        if (success) {
+                            int userId = json.getInt("user_id");
+                            String username = json.getString("username");
+                            String full_name = json.getString("full_name");
+
+                            SharedPreferences prefs = getSharedPreferences("WooferPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putBoolean("is_logged_in", true);
+                            editor.putInt("user_id", userId);
+                            editor.putString("username", username);
+                            editor.putString("full_name", full_name);
+                            editor.apply();
+
+                            Toast.makeText(login.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(login.this, MainActivity.class));
+                            finish();
+                        } else {
+                            String error = json.optString("error", "Login failed");
+                            Toast.makeText(login.this, error, Toast.LENGTH_SHORT).show();
                         }
 
-                    } else {
-                        Toast.makeText(login.this, "Login failed: " + result, Toast.LENGTH_SHORT).show();
-                        userText.setText("");
-                        passwordText.setText("");
+                    } catch (JSONException e) {
+                        Log.e("WooferDebug", "JSON parse error: " + e.getMessage());
+                        Toast.makeText(login.this, "Invalid server response", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
     }
-
-
 }
