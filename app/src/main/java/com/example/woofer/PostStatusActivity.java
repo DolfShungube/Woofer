@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -31,7 +33,7 @@ public class PostStatusActivity extends AppCompatActivity {
     @SuppressLint("WrongViewCast")
     EditText statusText ;
     Button postButton;
-    Button back;
+    ImageView back;
 
     OkHttpClient client = new OkHttpClient();
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
@@ -92,9 +94,7 @@ public class PostStatusActivity extends AppCompatActivity {
                         int statusId = json.getInt("status_id");
 
                         runOnUiThread(() -> {
-                            Intent intent = new Intent(PostStatusActivity.this, StatusDetailActivity.class);
-                            intent.putExtra("status_id", statusId);
-                            startActivity(intent);
+                            setResult(RESULT_OK);
                             finish();
                         });
                     } catch (Exception e) {

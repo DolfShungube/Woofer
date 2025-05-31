@@ -56,13 +56,13 @@ public class SearchFragment extends Fragment {
                 fetchUser(s.toString());
             }
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
             @Override public void afterTextChanged(Editable s) {}
         });
 
         return view;
     }
 
-    // Updated to accept query
     private void fetchUser(String query) {
         String url = "https://lamp.ms.wits.ac.za/home/s2744607/get_user.php?search=" + query;
 
@@ -90,11 +90,13 @@ public class SearchFragment extends Fragment {
             users.clear();
             for (int i = 0; i < all.length(); i++) {
                 JSONObject user = all.getJSONObject(i);
+                int userId = user.getInt("id");
                 String username = user.getString("username");
 
-                users.add(new SearchUser(username, R.drawable.default_profile));
+
+                users.add(new SearchUser(username, R.drawable.default_profile, userId));
             }
-            adapter.notifyDataSetChanged(); // FIXED: use adapter instance
+            adapter.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
         }

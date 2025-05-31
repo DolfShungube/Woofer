@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,8 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,14 +31,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-
 public class UpdatesFragment extends Fragment {
     private RecyclerView statusRecyclerView;
     private StatusAdapter statusAdapter;
     private List<Status> statusList = new ArrayList<>();
+    private OkHttpClient client = new OkHttpClient();
 
-    private
-    OkHttpClient client = new OkHttpClient();
+    private ActivityResultLauncher<Intent> postStatusLauncher;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -47,26 +46,38 @@ public class UpdatesFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_updates, container, false);
+
         statusRecyclerView = view.findViewById(R.id.statusRecyclerView);
         statusRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         statusAdapter = new StatusAdapter(statusList, getContext());
         statusRecyclerView.setAdapter(statusAdapter);
 
-        ImageView addStatus = view.findViewById(R.id.addText);
+        // Launch PostStatusActivity and refresh on return
+        postStatusLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK) {
+                        fetchStatuses();
+                    }
+                }
+        );
 
+        ImageView addStatus = view.findViewById(R.id.addText);
         addStatus.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), PostStatusActivity.class);
-            startActivity(intent);
+            postStatusLauncher.launch(intent);
         });
 
         fetchStatuses();
         return view;
     }
+
+    @Override
     public void onResume() {
         super.onResume();
         fetchStatuses();
     }
+
     private void fetchStatuses() {
         Request request = new Request.Builder()
                 .url("https://lamp.ms.wits.ac.za/home/s2744607/getstatus.php")
@@ -80,18 +91,14 @@ public class UpdatesFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseBody = response.body().string();
-                requireActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        processJSON(responseBody);
-                    }
-                });
+                if (isAdded()) {  // Ensure fragment is attached
+                    requireActivity().runOnUiThread(() -> processJSON(responseBody));
+                }
             }
         });
     }
 
     public void processJSON(String json) {
-
         try {
             JSONArray all = new JSONArray(json);
             statusList.clear();
@@ -103,12 +110,11 @@ public class UpdatesFragment extends Fragment {
                 String timestamp = status.getString("timestamp");
                 int upvotes = status.getInt("likes");
 
-                statusList.add(new Status(statusId,username,text,timestamp,R.drawable.default_profile,upvotes));
+                statusList.add(new Status(statusId, username, text, timestamp, R.drawable.default_profile, upvotes));
             }
             statusAdapter.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 }
