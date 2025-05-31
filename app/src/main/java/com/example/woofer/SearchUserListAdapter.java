@@ -49,9 +49,10 @@ public class SearchUserListAdapter extends ArrayAdapter<SearchUser> {
         SearchUser friend = getItem(position);
         holder.username.setText(friend.getUsername());
 
-        convertView.setOnClickListener(v ->{
+        convertView.setOnClickListener(v -> {
             Intent intent = new Intent(context, FriendProfileActivity.class);
-            intent.putExtra("username", friend.getUsername());
+            intent.putExtra("friend_user_id", friend.getFriend_id());
+            intent.putExtra("friend_username", friend.getUsername());
             context.startActivity(intent);
         });
 
