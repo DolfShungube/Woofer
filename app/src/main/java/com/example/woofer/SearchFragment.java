@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +67,11 @@ public class SearchFragment extends Fragment {
     }
 
     private void fetchUser(String query) {
+        try {
+            query = URLEncoder.encode(query, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         String url = "https://lamp.ms.wits.ac.za/home/s2744607/get_user.php?search=" + query;
 
         Request request = new Request.Builder()
@@ -79,6 +87,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseBody = response.body().string();
+                Log.d("SearchResponse", responseBody);
                 requireActivity().runOnUiThread(() -> processJSON(responseBody));
             }
         });
@@ -86,6 +95,9 @@ public class SearchFragment extends Fragment {
 
     public void processJSON(String json) {
         try {
+            adapter = new SearchUserListAdapter(getContext(), R.layout.item_friend, users);
+            listView.setAdapter(adapter);
+
             JSONArray all = new JSONArray(json);
             users.clear();
             for (int i = 0; i < all.length(); i++) {

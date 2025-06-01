@@ -71,6 +71,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/friendsFriends"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
