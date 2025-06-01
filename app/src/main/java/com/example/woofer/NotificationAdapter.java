@@ -7,6 +7,7 @@ import android.net.http.UrlRequest;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,6 +67,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     Intent intent = new Intent(context, StatusDetailActivity.class);
                     intent.putExtra("status_id", statusId);
                     context.startActivity(intent);
+                }else{
+                    Toast.makeText(context, "No post linked to this notification", Toast.LENGTH_SHORT).show();
                 }
         });
         }else if(holder instanceof NotificationRequestViewHolder){

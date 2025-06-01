@@ -66,9 +66,9 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
     private void updateVotes(Status status, StatusViewHolder holder) {
 
         SharedPreferences prefs = context.getSharedPreferences("WooferPrefs", Context.MODE_PRIVATE);
-        String userId = prefs.getString("user_id", null);
+        int userId = prefs.getInt("user_id", -1);
 
-        if (userId == null) {
+        if (userId == -1) {
             Log.e("StatusAdapter", "User ID not found in SharedPreferences");
             return;
         }
@@ -79,7 +79,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
         }
 
         RequestBody formBody = new FormBody.Builder()
-                .add("user_id", userId)
+                .add("user_id", String.valueOf(userId))
                 .add("status_id", String.valueOf(status.getStatusId()))
                 .build();
 

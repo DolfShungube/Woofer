@@ -56,7 +56,7 @@ public class NotificationsFragment extends Fragment {
     private void fetchNotifications() {
         SharedPreferences prefs = getActivity().getSharedPreferences("WooferPrefs", Context.MODE_PRIVATE);
         int userId = prefs.getInt("user_id", -1);
-        String url = "https://lamp.ms.wits.ac.za/home/s2744607/get_notifications.php/user_id=" + userId;
+        String url = "https://lamp.ms.wits.ac.za/home/s2744607/get_notifications.php?user_id=" + userId;
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -90,11 +90,15 @@ public class NotificationsFragment extends Fragment {
                 String senderUsername = notification.getString("senderUsername");
                 String timestamp = notification.getString("timestamp");
                 String message = notification.getString("message");
-                int senderId = notification.optInt("follower_id", -1);
+                int senderId = notification.optInt("senderId", -1);
                 Integer statusId = notification.isNull("status_id") ? null : notification.getInt("status_id");
 
+                if (statusId != null) {
+                    notificationList.add(new Notification(type, senderUsername, timestamp, message, statusId, senderId));
+                } else {
+                    notificationList.add(new Notification(type, senderUsername, timestamp, message, null, senderId));
+                }
 
-                notificationList.add(new Notification(type, senderUsername,timestamp,message, statusId,senderId));
             }
             notificationAdapter.notifyDataSetChanged();
         } catch (JSONException e) {
