@@ -30,25 +30,26 @@ public class FriendsActivity extends AppCompatActivity {
     private ImageView back;
     private OkHttpClient client = new OkHttpClient();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
-        // Get logged in user ID
+
         SharedPreferences prefs = getSharedPreferences("WooferPrefs", MODE_PRIVATE);
         int currentUserId = prefs.getInt("user_id", -1);
 
-        // Set up RecyclerView and adapter
+
         friendRecyclerView = findViewById(R.id.friendsRecyclerView);
         friendAdapter = new FriendAdapter(friendList, this, currentUserId);
         friendRecyclerView.setAdapter(friendAdapter);
 
-        // Handle back button
+
         back = findViewById(R.id.imageBack);
         back.setOnClickListener(v -> finish());
 
-        // Load friends
+
         fetchFriends();
     }
 

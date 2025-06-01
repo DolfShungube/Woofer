@@ -8,7 +8,7 @@ public class Notification {
     private Integer statusId;
     private int senderId;
 
-    public Notification(String type, String senderUsername, String timestamp, String message, int statusId, int senderId) {
+    public Notification(String type, String senderUsername, String timestamp, String message, Integer statusId, int senderId) {
         this.type = type;
         this.senderUsername = senderUsername;
         this.timestamp = timestamp;

@@ -1,6 +1,7 @@
 package com.example.woofer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,13 +50,14 @@ public class StatusDetailActivity extends AppCompatActivity {
         upvoteButton = findViewById(R.id.upvoteButton);
 
         int statusId = getIntent().getIntExtra("status_id", -1);
+        Log.d("StatusDetailActivity", "Received status_id: " + statusId);
+
         if(statusId != -1){
             getStatus(statusId);
         }
     }
 
     private void getStatus(int statusId) {
-        statusId = getIntent().getIntExtra("status_id", -1);
         String url = "https://lamp.ms.wits.ac.za/home/s2744607/view_status.php?status_id=" + statusId;
         Request request = new Request.Builder()
                 .url(url)

@@ -44,8 +44,8 @@ public class FriendProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friend_profile);
 
 
-        SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
-        currentUserId = prefs.getInt("user_id", 0);
+        SharedPreferences prefs = getSharedPreferences("WooferPrefs", MODE_PRIVATE);
+        currentUserId = prefs.getInt("user_id", -1);
 
         LinearLayout friendsLayout = findViewById(R.id.friendsFriends);
         back = findViewById(R.id.imageBack);
@@ -56,7 +56,7 @@ public class FriendProfileActivity extends AppCompatActivity {
         follow = findViewById(R.id.followButton);
 
 
-        friendUserId = getIntent().getIntExtra("friend_user_id", 0);
+        friendUserId = getIntent().getIntExtra("friend_user_id", -1);
         String friendUsername = getIntent().getStringExtra("friend_username");
 
         userName.setText(friendUsername);
