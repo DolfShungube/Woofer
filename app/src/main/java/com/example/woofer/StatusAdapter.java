@@ -1,6 +1,8 @@
 package com.example.woofer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,9 +63,20 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
         });
     }
 
-    private void updateVotes(Status status, StatusViewHolder holder){
+    private void updateVotes(Status status, StatusViewHolder holder) {
 
-        String userId = "1";
+        SharedPreferences prefs = context.getSharedPreferences("WooferPrefs", Context.MODE_PRIVATE);
+        String userId = prefs.getString("user_id", null);
+
+        if (userId == null) {
+            Log.e("StatusAdapter", "User ID not found in SharedPreferences");
+            return;
+        }
+
+        if (status == null || status.getStatusId() == 0) {
+            Log.e("StatusAdapter", "Invalid status object");
+            return;
+        }
 
         RequestBody formBody = new FormBody.Builder()
                 .add("user_id", userId)
@@ -84,18 +97,17 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseBody = response.body().string();
+                Log.d("StatusAdapter", "Upvote response: " + responseBody);
                 if (response.isSuccessful() && responseBody.contains("Upvote added")) {
-                    holder.itemView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            int newUpvotes = status.getUpvotes() + 1;
-                            status.setUpvotes(newUpvotes);
-                            holder.upvoteCount.setText(String.valueOf(newUpvotes));
-                        }
+                    holder.itemView.post(() -> {
+                        int newUpvotes = status.getUpvotes() + 1;
+                        status.setUpvotes(newUpvotes);
+                        holder.upvoteCount.setText(String.valueOf(newUpvotes));
                     });
                 }
             }
         });
     }
+
 
 }

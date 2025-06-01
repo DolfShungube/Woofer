@@ -1,10 +1,14 @@
 package com.example.woofer;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,10 +43,11 @@ public class FriendProfileActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_friend_profile);
 
-        // Assuming you store your logged in user ID in SharedPreferences
+
         SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
         currentUserId = prefs.getInt("user_id", 0);
 
+        LinearLayout friendsLayout = findViewById(R.id.friendsFriends);
         back = findViewById(R.id.imageBack);
         profileImage = findViewById(R.id.profileImage);
         userName = findViewById(R.id.userName);
@@ -50,20 +55,24 @@ public class FriendProfileActivity extends AppCompatActivity {
         friends = findViewById(R.id.friendsLabel);
         follow = findViewById(R.id.followButton);
 
-        // Get friend's user ID and username from intent extras
+
         friendUserId = getIntent().getIntExtra("friend_user_id", 0);
         String friendUsername = getIntent().getStringExtra("friend_username");
 
-        // Set the username and profile image placeholder
         userName.setText(friendUsername);
         profileImage.setImageResource(R.drawable.default_profile); // Replace with actual profile image if you have
 
         back.setOnClickListener(v -> finish());
 
-        // Check follow status from server
+        friendsLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(this, FriendsActivity.class);
+            startActivity(intent);
+        });
+
+
         checkFollowStatus();
 
-        // Handle follow/unfollow button click
+
         follow.setOnClickListener(v -> {
             if (follow.getText().toString().equalsIgnoreCase("Follow")) {
                 sendFollowRequest();
